@@ -1,6 +1,7 @@
 from skimage.measure import regionprops
 import skimage.morphology
 from scipy import ndimage
+from skimage.filters import sobel
 from scipy.ndimage.morphology import distance_transform_edt
 from matplotlib.colors import LinearSegmentedColormap
 import colorcet as cc
@@ -119,6 +120,12 @@ def erode_labels3(image, distance):
         image_eroded = skimage.morphology.label(image_eroded)
         print('\033[93m[WARNING]: Objects missing after erosion. Consider reducing iterations (distance)')
 
+    return image_eroded
+
+# Erode with sobel filter
+def erode_labels4(image):
+    edges = sobel(image) !=0
+    image_eroded = np.where(edges == False, image, 0)
     return image_eroded
 
 # Get glasbey cmap
