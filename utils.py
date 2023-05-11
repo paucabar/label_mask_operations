@@ -57,6 +57,26 @@ def dist_trans_labels(image):
 
     return image_dist_trans
 
+# Methods to erode labels
+def boolean_kernel(crop):
+    unique_labels = np.unique(crop)
+    if unique_labels.size > 1:
+      return 0
+    else:
+       return crop[1,1]
+
+def erode_labels(image):
+    image_eroded = np.zeros(image.shape)
+    for x in range(image.shape[1]-2):
+      for y in range(image.shape[0]-2):
+        crop = image[y:y+3, x:x+3]
+        #if(y==100):
+        #  print(crop.shape)
+        current_result = boolean_kernel(crop)
+        image_eroded[y+1, x+1] = current_result
+  
+    return image_eroded
+
 # Get glasbey cmap
 def get_glasbey_cmap():
     l=cc.cm.glasbey_bw_minc_20_minl_30_r.colors            
