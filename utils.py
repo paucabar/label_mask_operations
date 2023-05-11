@@ -77,6 +77,18 @@ def erode_labels(image):
   
     return image_eroded
 
+def erode_labels2(image):
+    image_eroded = []
+    for x in range(image.shape[1]-2):
+      for y in range(image.shape[0]-2):
+        crop = image[y:y+3, x:x+3]
+        #if(y==100):
+        #  print(crop.shape)
+        image_eroded.append(boolean_kernel(crop))
+    image_eroded = np.array(image_eroded)
+  
+    return image_eroded.reshape(image.shape[0]-2,image.shape[1]-2).T
+
 # Get glasbey cmap
 def get_glasbey_cmap():
     l=cc.cm.glasbey_bw_minc_20_minl_30_r.colors            
