@@ -66,14 +66,14 @@ def boolean_kernel(crop):
        return crop[1,1]
 
 def erode_labels(image):
-    image_eroded = np.zeros(image.shape)
+    image_eroded = np.zeros([image.shape[0]-2,image.shape[1]-2])
     for x in range(image.shape[1]-2):
       for y in range(image.shape[0]-2):
         crop = image[y:y+3, x:x+3]
         #if(y==100):
         #  print(crop.shape)
         current_result = boolean_kernel(crop)
-        image_eroded[y+1, x+1] = current_result
+        image_eroded[y, x] = current_result
   
     return image_eroded
 
@@ -87,7 +87,7 @@ def erode_labels2(image):
         image_eroded.append(boolean_kernel(crop))
     image_eroded = np.array(image_eroded)
   
-    return image_eroded.reshape(image.shape[1]-2,image.shape[0]-2)
+    return np.reshape(image_eroded, (image.shape[0]-2,image.shape[1]-2), order='F')
 
 # Get glasbey cmap
 def get_glasbey_cmap():
