@@ -87,7 +87,7 @@ def erode_labels2(image):
         image_eroded.append(boolean_kernel(crop))
     image_eroded = np.array(image_eroded)
   
-    return image_eroded.reshape(image.shape[0]-2,image.shape[1]-2).T
+    return image_eroded.reshape(image.shape[1]-2,image.shape[0]-2)
 
 # Get glasbey cmap
 def get_glasbey_cmap():
