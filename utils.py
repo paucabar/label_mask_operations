@@ -124,10 +124,19 @@ def erode_labels3(image, distance=1):
 
 # Erode with sobel filter
 def erode_labels4(image):
-    edges = sobel(image, mode="constant", cval=0.0) !=0
+    #edges = sobel(image, mode="constant", cval=0.0) != 0
+    edges = sobel(image) != 0
     #edges = ndimage.binary_erosion(edges, iterations = 1)
     image_eroded = np.where(edges == False, image, 0)
     return image_eroded
+
+# Erode with sobel filter and get edges
+def erode_labels4_get_edges(image):
+    #edges = sobel(image, mode="constant", cval=0.0) != 0
+    edges = sobel(image) != 0
+    edges = ndimage.binary_erosion(edges, iterations = 1)
+    image_eroded = np.where(edges == False, image, 0)
+    return image_eroded, edges
 
 # Get glasbey cmap
 def get_glasbey_cmap():
