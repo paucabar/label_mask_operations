@@ -101,7 +101,7 @@ def erode_mask(image, label_id, distance):
     return eroded_label_id
 
 # Erodes all the masks contained in a label image
-def erode_labels3(image, distance):
+def erode_labels3(image, distance=1):
     eroded_labels_list = [] # creates empty list to save images of the eroded labels
     regions = regionprops(image)
 
@@ -124,7 +124,8 @@ def erode_labels3(image, distance):
 
 # Erode with sobel filter
 def erode_labels4(image):
-    edges = sobel(image) !=0
+    edges = sobel(image, mode="constant", cval=0.0) !=0
+    #edges = ndimage.binary_erosion(edges, iterations = 1)
     image_eroded = np.where(edges == False, image, 0)
     return image_eroded
 
@@ -135,5 +136,11 @@ def get_glasbey_cmap():
     cmap_glasbey = LinearSegmentedColormap.from_list('my_list', l, N=1000)
     return cmap_glasbey
 
+def set_glasbey_cmap(image):
+    l=cc.cm.glasbey_bw_minc_20_minl_30_r.colors            
+    l[0]=[0,0,0]
+    cmap_lab = LinearSegmentedColormap.from_list('my_list', l, N=1000)
+    colored_image = np.uint8(cmap_lab(image) * 255)
+    return colored_image
 
 
